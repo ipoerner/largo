@@ -1,0 +1,35 @@
+############################################################
+# Dockerfile for c-capnproto compilation
+# <https://github.com/jmckaskill/c-capnproto>
+# Based upon Ubuntu 14.04 (Trusty Tahr)
+############################################################
+
+# Set the base image to Ubuntu
+FROM ubuntu:14.04
+
+# File Author / Maintainer
+MAINTAINER Ingmar Poerner
+
+# Update the repository sources list
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# Install tools and libs required for compiling the project
+RUN apt-get install -y build-essential libgtest-dev make
+
+# Install additional tools
+RUN apt-get install -y git
+
+# Work-around for missing user mapping
+# see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
+RUN apt-get install -y whois
+RUN useradd -m -s /bin/bash -p $(mkpasswd dockerdev) -G sudo dockerdev
+COPY env/boot.sh /boot.sh
+RUN chmod 755 /boot.sh
+ENTRYPOINT /boot.sh
+
+# Copy user configs
+COPY config/* /home/dockerdev/
+
+# Grab git completion script
+ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/dockerdev/.git-completion.bash
