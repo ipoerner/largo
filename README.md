@@ -8,10 +8,6 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 Directory structure:
 
-* bin/
-
-  Put links to the two main script files here and add it to your path.
-
 * config
 
   Put links to your private configuration files here. They will be copied into
