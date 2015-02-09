@@ -10,10 +10,10 @@ as well as SSH agent forwarding for simplified SSH key management.
 
     build-image.sh <project> (private|public)
 
-Builds a new Docker image for a given `project`. Each `project` consists of a
+Builds a new Docker image for a given `project`. Each project consists of a
 `Dockerfile` that is located in a directory carrying the name of the `project`
 and which must itself be located in either of the two folders `public/` or
-`private/`, depending on whether or not you want to share the `project` and its
+`private/`, depending on whether or not you want to share the project and its
 corresponding `Dockerfile` with others.
 
 The default privacy setting is "public", so you may omit the last parameter. The
