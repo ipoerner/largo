@@ -5,7 +5,7 @@ set -e
 PROJECT=${1:-default}
 IMAGE_NAME="build-env-${PROJECT}"
 CONTAINER_NAME="build-env-${PROJECT}"
-REPOSITORY_PATH=`pwd`
+REPOSITORY_PATH=`git rev-parse --show-toplevel`
 REMOTE_HOME="/home/dockerdev"
 REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
 PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }'`
