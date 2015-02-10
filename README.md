@@ -26,6 +26,10 @@ environment. This script must be invoked from within the project repository,
 as it will use Git to determine the project root and mount this to your home
 directory within the Docker container.
 
+If your project is not a Git repository, it will use `pwd` to determine the
+current path. Thus, you'll need to explicitly change to the directory you want
+to see mounted in the container.
+
 ## Directory structure
 
 * config
