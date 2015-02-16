@@ -20,18 +20,15 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update -y
 RUN apt-get upgrade -y
 
-# Install manpages
-RUN apt-get install -y man
+# Install common tools
+RUN apt-get install -y git man ssh --no-install-recommends
 
 # Install tools and libs required for compiling the project
-RUN apt-get install -y build-essential libgtest-dev make
-
-# Install additional tools
-RUN apt-get install -y git
+RUN apt-get install -y build-essential libgtest-dev make --no-install-recommends
 
 # Work-around for missing user mapping
 # see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
-RUN apt-get install -y whois
+RUN apt-get install -y whois --no-install-recommends
 RUN useradd -m -s /bin/bash -p $(mkpasswd dockerdev) -G sudo dockerdev
 COPY env/boot.sh /boot.sh
 RUN chmod 755 /boot.sh
