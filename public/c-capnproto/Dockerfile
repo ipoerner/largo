@@ -17,7 +17,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Update the repository sources list
-RUN apt-get update
+RUN apt-get update -y
 RUN apt-get upgrade -y
 
 # Install manpages
