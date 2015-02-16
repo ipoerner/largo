@@ -20,6 +20,9 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update
 RUN apt-get upgrade -y
 
+# Install manpages
+RUN apt-get install -y man
+
 # Install tools and libs required for compiling the project
 RUN apt-get install -y build-essential libgtest-dev make
 
