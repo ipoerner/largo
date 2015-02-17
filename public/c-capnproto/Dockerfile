@@ -21,7 +21,7 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 
 # Install common tools
-RUN apt-get install -y git man ssh --no-install-recommends
+RUN apt-get install -y git git-email man ssh --no-install-recommends
 
 # Install tools and libs required for compiling the project
 RUN apt-get install -y build-essential libgtest-dev make --no-install-recommends
