@@ -8,7 +8,7 @@ CONTAINER_NAME="build-env-${PROJECT}"
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
 REMOTE_HOME="/home/dockerdev"
 REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
-PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }'`
+PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }' | head -n 1`
 
 USER_ID=`id -u`
 GROUP_ID=`id -g`
