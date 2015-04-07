@@ -25,5 +25,4 @@ if [ -f ~/.git-completion.bash ]; then
 fi
 EOM
 
-cd /home/dockerdev
-exec su dockerdev
+exec login -f dockerdev
