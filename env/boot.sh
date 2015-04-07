@@ -2,12 +2,12 @@
 
 # manual user mapping, inspired by <http://chapeau.freevariable.com/2014/08/docker-uid.html>
 
-export ORIGPASSWD=$(cat /etc/passwd | grep dockerdev)
-export ORIG_UID=$(echo $ORIGPASSWD | cut -f3 -d:)
-export ORIG_GID=$(echo $ORIGPASSWD | cut -f4 -d:)
+ORIGPASSWD=$(cat /etc/passwd | grep dockerdev)
+ORIG_UID=$(echo $ORIGPASSWD | cut -f3 -d:)
+ORIG_GID=$(echo $ORIGPASSWD | cut -f4 -d:)
 
-export DEV_UID=${DEV_UID:=$ORIG_UID}
-export DEV_GID=${DEV_GID:=$ORIG_GID}
+DEV_UID=${DEV_UID:=$ORIG_UID}
+DEV_GID=${DEV_GID:=$ORIG_GID}
 
 ORIG_HOME=$(echo $ORIGPASSWD | cut -f6 -d:)
 
