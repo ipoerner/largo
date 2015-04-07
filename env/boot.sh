@@ -16,13 +16,17 @@ sed -i -e "s/dockerdev:x:$ORIG_GID:/dockerdev:x:$DEV_GID:/" /etc/group
 
 chown -R ${DEV_UID}:${DEV_GID} ${ORIG_HOME}
 
-# git completion
+# misc commands for interactive, non-login shell
 
 /bin/cat <<EOM >>${ORIG_HOME}/.bashrc
 
+# git completion
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+
+# SSH agent forwarding
+export SSH_AUTH_SOCK=/tmp/ssh_auth_sock
 EOM
 
 exec login -f dockerdev
