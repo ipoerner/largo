@@ -40,6 +40,11 @@ ENTRYPOINT /boot.sh
 
 # Copy user configs
 COPY config/* /home/dockerdev/
+# Copy additional SSH keys
+COPY ssh/* /home/dockerdev/.ssh/
+# Optionally adds one or more known hosts
+#RUN touch /root/.ssh/known_hosts
+#RUN ssh-keyscan my-server >> /root/.ssh/known_hosts
 
 # Grab git completion script
 ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/dockerdev/.git-completion.bash

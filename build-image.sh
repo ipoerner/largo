@@ -18,4 +18,11 @@ for file in `ls -AL -I .gitignore`; do
 done
 )
 
+mkdir -p ${SCRIPTPATH}/${VISIBILITY}/${PROJECT}/ssh
+(cd ${SCRIPTPATH}/ssh
+for file in `ls -AL -I .gitignore`; do
+    cp -f $file ${SCRIPTPATH}/${VISIBILITY}/${PROJECT}/ssh/
+done
+)
+
 sudo docker build --tag ${IMAGE_NAME} --force-rm ${SCRIPTPATH}/${VISIBILITY}/${PROJECT}

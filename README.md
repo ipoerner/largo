@@ -37,6 +37,11 @@ to see mounted in the container.
   Put links to your configuration files here (i.e. `~/.gitconfig`). These will
 be copied to the home directory within the Docker container.
 
+* ssh
+
+  Put additional SSH keys here which are not installed on the host system. These
+  will also be copied to the home directory within the Docker container.
+
 * env
 
   Contains scripts required for running the development environments.
