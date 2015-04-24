@@ -48,3 +48,7 @@ COPY ssh/* /home/dockerdev/.ssh/
 
 # Grab git completion script
 ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/dockerdev/.git-completion.bash
+RUN echo ". ~/.git-completion.bash" >>/home/dockerdev/.bashrc
+
+# SSH agent forwarding
+RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/dockerdev/.bashrc
