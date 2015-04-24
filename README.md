@@ -6,7 +6,7 @@ environments using Docker.
 Implements rudimentary user-mapping between the host system and the container,
 as well as SSH agent forwarding for simplified SSH key management.
 
-## Usage
+## <a name="usage"></a>Usage
 
     bin/cargo-load (private|public) <project>
 
@@ -15,6 +15,9 @@ Builds a new Docker image for a given `project`. Each project consists of a
 and which must itself be located in either of the two folders `public/` or
 `private/`, depending on whether or not you want to share the project and its
 corresponding `Dockerfile` with others.
+
+All Dockerfile *must* be based upon `Dockerfile.template` (see
+[Directory Structure](#dirstruct)).
 
 The default privacy setting is "public", so you may omit the last parameter. The
 script can be invoked from anywhere.
@@ -33,7 +36,7 @@ to see mounted in the container.
 You can append a list of additional arguments to the `docker run`command if you
 like.
 
-## Directory structure
+## <a name="dirstruct"></a>Directory Structure
 
 * bin
 
