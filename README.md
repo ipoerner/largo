@@ -8,7 +8,7 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 ## Usage
 
-    bin/cargo-load <project> (private|public)
+    bin/cargo-load (private|public) <project>
 
 Builds a new Docker image for a given `project`. Each project consists of a
 `Dockerfile` that is located in a directory carrying the name of the project
@@ -19,7 +19,7 @@ corresponding `Dockerfile` with others.
 The default privacy setting is "public", so you may omit the last parameter. The
 script can be invoked from anywhere.
 
-    bin/cargo-open <project>
+    bin/cargo-open <project> <args>
 
 Opens a temporary Docker container which will bring you to your projects build
 environment. This script must be invoked from within the project repository,
@@ -29,6 +29,9 @@ directory within the Docker container.
 If your project is not a Git repository, it will use `pwd` to determine the
 current path. Thus, you'll need to explicitly change to the directory you want
 to see mounted in the container.
+
+You can append a list of additional arguments to the `docker run`command if you
+like.
 
 ## Directory structure
 
