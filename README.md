@@ -19,7 +19,7 @@ corresponding `Dockerfile` with others.
 The default privacy setting is "public", so you may omit the last parameter. The
 script can be invoked from anywhere.
 
-    bin/cargo-open <project> <args>
+    bin/cargo-open <project> [<args>]
 
 Opens a temporary Docker container which will bring you to your projects build
 environment. This script must be invoked from within the project repository,

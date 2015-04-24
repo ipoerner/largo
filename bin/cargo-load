@@ -12,7 +12,7 @@ case $# in
     PROJECT=${2}
     ;;
     *)
-    echo "Usage: cargo-load [<project-visibility>] <project-name>"
+    echo "Usage: cargo-load (public|private) <project>"
     exit 1
     ;;
 esac

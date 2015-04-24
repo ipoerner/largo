@@ -4,7 +4,7 @@ set -e
 
 case $# in
     0)
-    echo "Usage: cargo-open <project-name> [<docker-args>]"
+    echo "Usage: cargo-open <project> [<args>]"
     exit 1
     ;;
     *)
