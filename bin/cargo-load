@@ -38,4 +38,7 @@ for file in `ls -AL -I .gitignore`; do
 done
 )
 
-sudo docker build --tag ${IMAGE_NAME} --force-rm ${SCRIPTPATH}/../${VISIBILITY}/${PROJECT}
+sudo docker build \
+    --tag ${IMAGE_NAME} \
+    --force-rm \
+    ${SCRIPTPATH}/../${VISIBILITY}/${PROJECT}
