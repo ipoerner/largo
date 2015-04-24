@@ -1,5 +1,5 @@
 ############################################################
-# Dockerfile for c-capnproto compilation
+# Dockerfile for c-capnproto library
 # <https://github.com/jmckaskill/c-capnproto>
 # Based upon Ubuntu 14.04 (Trusty Tahr)
 ############################################################
