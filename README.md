@@ -1,4 +1,4 @@
-# Containers
+# Cargo
 
 A few scripts which assist with the management of redistributable development
 environments using Docker.
@@ -8,7 +8,7 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 ## Usage
 
-    build-image.sh <project> (private|public)
+    bin/cargo-load <project> (private|public)
 
 Builds a new Docker image for a given `project`. Each project consists of a
 `Dockerfile` that is located in a directory carrying the name of the project
@@ -19,7 +19,7 @@ corresponding `Dockerfile` with others.
 The default privacy setting is "public", so you may omit the last parameter. The
 script can be invoked from anywhere.
 
-    open-container.sh <project>
+    bin/cargo-open <project>
 
 Opens a temporary Docker container which will bring you to your projects build
 environment. This script must be invoked from within the project repository,
@@ -31,6 +31,21 @@ current path. Thus, you'll need to explicitly change to the directory you want
 to see mounted in the container.
 
 ## Directory structure
+
+* bin
+
+  Executables:
+
+** cargo-load
+
+   This scripts builds a new Docker image for a given project. Invoke this from
+   anywhere.
+
+** cargo-open
+
+   This script spawns a new Docker container for a given project, mounts the
+project sources tree to the home directory within the Docker container and
+spawns a new shell. Invoke this script from within your project repository path.
 
 * config
 
@@ -44,7 +59,7 @@ be copied to the home directory within the Docker container.
 
 * env
 
-  Contains scripts required for running the development environments.
+  Contains scripts required for starting up the development environments.
 
 * private
 
@@ -55,16 +70,6 @@ be tracked by Git.
 
   Contains a sub-directory for each of your public projects. Those will be
 tracked by Git.
-
-* build-image.sh
-
-  This scripts builds a new Docker image for a given project.
-
-* open-container.sh
-
-  This script spawns a new Docker container for a given project, mounts the
-project sources tree to the home directory within the Docker container and
-spawns a new shell. Invoke this script from within your project repository path.
 
 * Dockerfile.template
 
