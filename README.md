@@ -40,18 +40,19 @@ like.
 
 * bin
 
-  Executables:
+  Executables (also see [Usage](#usage)).
 
-** cargo-load
+  * cargo-load
 
-   This scripts builds a new Docker image for a given project. Invoke this from
-   anywhere.
+    This scripts builds a new Docker image for a given project. Invoke this from
+    anywhere.
 
-** cargo-open
+  * cargo-open
 
-   This script spawns a new Docker container for a given project, mounts the
-project sources tree to the home directory within the Docker container and
-spawns a new shell. Invoke this script from within your project repository path.
+    This script spawns a new Docker container for a given project, mounts the
+    project sources tree to the home directory within the Docker container and
+    spawns a new shell. Invoke this script from within your project repository
+    path.
 
 * config
 
