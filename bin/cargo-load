@@ -2,8 +2,21 @@
 
 set -e
 
-PROJECT=${1:-default}
-VISIBILITY=${2:-public}
+case $# in
+    1)
+    VISIBILITY="public"
+    PROJECT=${1}
+    ;;
+    2)
+    VISIBILITY=${1}
+    PROJECT=${2}
+    ;;
+    *)
+    echo "Usage: cargo-load [<project-visibility>] <project-name>"
+    exit 1
+    ;;
+esac
+
 IMAGE_NAME="build-env-${PROJECT}"
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")

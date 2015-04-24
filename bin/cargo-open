@@ -2,7 +2,16 @@
 
 set -e
 
-PROJECT=${1:-default}
+case $# in
+    0)
+    echo "Usage: cargo-open <project-name> [<docker-args>]"
+    exit 1
+    ;;
+    *)
+    PROJECT=${1}
+    ;;
+esac
+
 IMAGE_NAME="build-env-${PROJECT}"
 CONTAINER_NAME="build-env-${PROJECT}"
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
