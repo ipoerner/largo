@@ -35,17 +35,17 @@ RUN apt-get update -y && apt-get install -y build-essential --no-install-recomme
 # Work-around for missing user mapping
 # see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
 RUN apt-get install -y --no-install-recommends whois
-RUN useradd -m -s /bin/bash -p $(mkpasswd dockerdev) -G sudo dockerdev
+RUN useradd -m -s /bin/bash -p $(mkpasswd cargo) -G sudo cargo
 COPY env/boot.sh /boot.sh
 RUN chmod 755 /boot.sh
 ENTRYPOINT /boot.sh
 
 # Copy user configs
-COPY config/* /home/dockerdev/
+COPY config/* /home/cargo/
 
 # Grab git completion script
-ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/dockerdev/.git-completion.bash
-RUN echo ". ~/.git-completion.bash" >>/home/dockerdev/.bashrc
+ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/cargo/.git-completion.bash
+RUN echo ". ~/.git-completion.bash" >>/home/cargo/.bashrc
 
 # SSH agent forwarding
-RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/dockerdev/.bashrc
+RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/cargo/.bashrc

@@ -33,8 +33,13 @@ If your project is not a Git repository, it will use `pwd` to determine the
 current path. Thus, you'll need to explicitly change to the directory you want
 to see mounted in the container.
 
-You can append a list of additional arguments to the `docker run`command if you
-like.
+Once the container is running, you'll end up with a login shell of the `cargo`
+user. This user is basically a mapping of your host's user ID to a local user
+who has sudo rights and uses the password 'cargo'. All files created locally by
+the `cargo` user will be owned by your original user on the host system.
+
+You can also append a list of additional arguments to the `docker run`command if
+you like – for instance, for adding additional mount points.
 
 ## <a name="dirstruct"></a>Directory Structure
 
