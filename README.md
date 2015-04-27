@@ -90,3 +90,7 @@ tracked by Git.
 * README.md
 
   This file.
+
+## License
+
+Please see [LICENSE](/LICENSE) for licensing details.
