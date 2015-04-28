@@ -1,7 +1,7 @@
 # Cargo
 
-A few scripts which assist with the management of redistributable development
-environments using Docker.
+A few scripts which assist with the management of disposable build environments
+using Docker.
 
 Implements rudimentary user-mapping between the host system and the container,
 as well as SSH agent forwarding for simplified SSH key management.
@@ -71,7 +71,7 @@ be copied to the home directory within the Docker container.
 
 * env
 
-  Contains scripts required for starting up the development environments.
+  Contains script(s) required for firing up the build environments.
 
 * private
 
