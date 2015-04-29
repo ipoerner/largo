@@ -28,9 +28,9 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     ssh
 
 # Install tools and libs required for compiling the project
-RUN apt-get update -y && apt-get install -y build-essential --no-install-recommends \
-    libgtest-dev \
-    make
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    build-essential \
+    libgtest-dev
 
 # Work-around for missing user mapping
 # see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
