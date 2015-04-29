@@ -55,9 +55,9 @@ RUN echo ". ~/.git-completion.bash" >>/home/cargo/.bashrc
 # SSH agent forwarding
 RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/cargo/.bashrc
 
-RUN curl -SL http://www.monkey.org/~dugsong/fragroute/fragroute-1.2.tar.gz \
-    | tar -xz -C /home/cargo
-RUN cd /home/cargo/fragroute-1.2 && \
-    ./configure --prefix=/usr && \
-    sed -i 's/dnet.h/dumbnet.h/g' *.c *.h && \
-    make install
+#RUN curl -SL http://www.monkey.org/~dugsong/fragroute/fragroute-1.2.tar.gz \
+#    | tar -xz -C /home/cargo
+#RUN cd /home/cargo/fragroute-1.2 && \
+#    ./configure --prefix=/usr && \
+#    sed -i 's/dnet.h/dumbnet.h/g' *.c *.h && \
+#    make install
