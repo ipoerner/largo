@@ -11,7 +11,7 @@ case $# in
     IMAGE_NAME="cargo-base-${BASE}"
     ;;
     *)
-    echo "Usage: cargo-package <base-image>"
+    echo "Usage: cargo-create <base-image>"
     exit 1
     ;;
 esac

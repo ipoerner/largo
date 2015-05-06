@@ -10,7 +10,7 @@ GROUP_ID=`id -g`
 
 case $# in
     0)
-    echo "Usage: cargo-open <project-name> [<args>]"
+    echo "Usage: cargo-deliver <project-name> [<args>]"
     exit 1
     ;;
     *)
