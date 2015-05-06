@@ -2,25 +2,25 @@
 
 set -e
 
+REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
+REMOTE_HOME="/home/cargo"
+PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }' | head -n 1`
+USER_ID=`id -u`
+GROUP_ID=`id -g`
+
 case $# in
     0)
-    echo "Usage: cargo-open <project> [<args>]"
+    echo "Usage: cargo-open <project-name> [<args>]"
     exit 1
     ;;
     *)
     PROJECT=${1}
+    IMAGE_NAME="cargo-env-${PROJECT}"
+    CONTAINER_NAME="cargo-env-${PROJECT}"
+    REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
     shift
     ;;
 esac
-
-IMAGE_NAME="build-env-${PROJECT}"
-CONTAINER_NAME="build-env-${PROJECT}"
-REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
-REMOTE_HOME="/home/cargo"
-REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
-PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }' | head -n 1`
-USER_ID=`id -u`
-GROUP_ID=`id -g`
 
 # the trick of forwarding the SSH agent into the Docker container comes from Docker issue #6396 on GitHub
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>

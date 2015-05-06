@@ -1,0 +1,22 @@
+############################################################
+# Dockerfile template for a custom build environment
+# Based upon Ubuntu 14.04 (Trusty Tahr)
+############################################################
+
+# Set the base image to Ubuntu
+FROM cargo-base-trusty
+
+# File Author / Maintainer
+MAINTAINER Ingmar Poerner
+
+# Install tools and libs required for compiling the project
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    build-essential
+
+# Copy user configs
+COPY config/* /home/cargo/
+# Copy additional SSH keys
+COPY config/.ssh/* /home/cargo/.ssh/
+# Optionally adds one or more known hosts
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan my-known-host >> /root/.ssh/known_hosts

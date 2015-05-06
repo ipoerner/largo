@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+case $# in
+    1)
+    BASE=${1}
+    IMAGE_NAME="cargo-base-${BASE}"
+    ;;
+    *)
+    echo "Usage: cargo-package <base-image>"
+    exit 1
+    ;;
+esac
+
+(cd ${SCRIPTPATH}/../base
+cp -f Dockerfile.${BASE} Dockerfile
+sudo docker build \
+    --tag ${IMAGE_NAME} \
+    --force-rm \
+    .
+rm Dockerfile
+)

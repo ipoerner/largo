@@ -1,4 +1,0 @@
-[^.]*
-.*
-!.gitconfig
-!Dockerfile

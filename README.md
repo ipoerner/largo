@@ -1,6 +1,6 @@
 # Cargo
 
-A few scripts which assist with the management of disposable build environments
+A few scripts which assist with the management of custom build environments
 using Docker.
 
 Implements rudimentary user-mapping between the host system and the container,
@@ -8,84 +8,81 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 ## <a name="usage"></a>Usage
 
-    bin/cargo-load (private|public) <project>
+    bin/cargo-package <base-image>
 
-Builds a new Docker image for a given `project`. Each project consists of a
-`Dockerfile` that is located in a directory carrying the name of the project
-and which must itself be located in either of the two folders `public/` or
-`private/`, depending on whether or not you want to share the project and its
-corresponding `Dockerfile` with others.
+Creates a local Cargo base image to use as a base for your projects. These base
+images just add some custom features on top of existing public base images.
 
-All Dockerfile *must* be based upon `Dockerfile.template` (see
-[Directory Structure](#dirstruct)).
+You'll find the corresponding Dockerfiles under `base/Dockerfile.*`, where the
+file extension identifies the base image name to use.
 
-The default privacy setting is "public", so you may omit the last parameter. The
-script can be invoked from anywhere.
+Building a Cargo base image is the first step before doing anything else.
 
-    bin/cargo-open <project> [<args>]
+    bin/cargo-load [<project-name>]
 
-Opens a temporary Docker container which will bring you to your projects build
-environment. This script must be invoked from within the project repository,
-as it will use Git to determine the project root and mount this to your home
-directory within the Docker container.
+Creates a local Cargo image that represents your custom build environment. The
+project name will be either derived automatically from your current working
+directory, or you can supersede it with something else.
+
+In any case, your current working directory must contain a Dockerfile that uses
+an existing Cargo base image as a base.
+
+    bin/cargo-open <project-name> [<args>]
+
+Spawns a temporary Docker container which will bring you to your custom build
+environment. This script must be invoked from within the projects source
+repository, as it will use Git to determine the project root and mount this to
+your home directory within the Docker container.
 
 If your project is not a Git repository, it will use `pwd` to determine the
-current path. Thus, you'll need to explicitly change to the directory you want
-to see mounted in the container.
+current path. Thus, you'll first need to explicitly change to the exact
+directory you want to see mounted in the container.
 
 Once the container is running, you'll end up with a login shell of the `cargo`
 user. This user is basically a mapping of your host's user ID to a local user
 who has sudo rights and uses the password 'cargo'. All files created locally by
 the `cargo` user will be owned by your original user on the host system.
 
-You can also append a list of additional arguments to the `docker run`command if
-you like – for instance, for adding additional mount points.
+You can also append a list of additional arguments to pass to the `docker run`
+command if you like – for instance, for adding additional mount points.
 
 ## <a name="dirstruct"></a>Directory Structure
+
+* base
+
+  Contains a number of Dockerfiles to build the Cargo base images from.
 
 * bin
 
   Executables (also see [Usage](#usage)).
 
+  * cargo-package
+
+    Creates a new Cargo base image to use for your own project images.
+
   * cargo-load
 
-    This scripts builds a new Docker image for a given project. Invoke this from
-    anywhere.
+    To build a new Docker image for a given project. Invoke this from within
+    your project path.
 
   * cargo-open
 
-    This script spawns a new Docker container for a given project, mounts the
-    project sources tree to the home directory within the Docker container and
-    spawns a new shell. Invoke this script from within your project repository
-    path.
+    Spawns a new Docker container for a given project, mounts the project source
+    tree to the your home directory within the Docker container and brings you
+    to a login shell. Invoke this script from somewhere within your projects
+    source repository.
 
 * config
 
   Put links to your configuration files here (i.e. `~/.gitconfig`). These will
-be copied to the home directory within the Docker container.
+  be mirrored on your Docker containers home directory.
 
-* ssh
+  You can also provide additional SSH keys which are not installed on your host
+  system by putting them into `config/.ssh`.
 
-  Put additional SSH keys here which are not installed on the host system. These
-  will also be copied to the home directory within the Docker container.
+* examples
 
-* env
-
-  Contains script(s) required for firing up the build environments.
-
-* private
-
-  Contains a sub-directory for each of your private projects. None of these will
-be tracked by Git.
-
-* public
-
-  Contains a sub-directory for each of your public projects. Those will be
-tracked by Git.
-
-* Dockerfile.template
-
-  A Dockerfile template for your projects.
+  A few example projects and a template Dockerfile to use for your own projects.
 
 * README.md
 
