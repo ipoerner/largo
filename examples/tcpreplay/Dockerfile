@@ -1,6 +1,7 @@
 ############################################################
-# Dockerfile template for tcpreplay v4.0.5
+# Dockerfile template for tcpreplay v4.1.0
 # <https://github.com/appneta/tcpreplay>
+# note: invoke 'autogen.sh' twice before calling 'configure' (see <https://github.com/appneta/tcpreplay/issues/181>)
 # note: build with `./configure --disable-local-libopts --disable-libopts-install`
 ############################################################
 
@@ -12,12 +13,16 @@ MAINTAINER Ingmar Poerner
 
 # Install tools and libs required for compiling the project
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    autoconf \
     autogen \
+    automake \
     build-essential \
     libdnet-dev \
     libdumbnet-dev \
     libevent1-dev \
-    libpcap-dev
+    libpcap-dev \
+#   libpopt-dev \
+    libtool
 
 # Copy user configs
 COPY config/* /home/cargo/
