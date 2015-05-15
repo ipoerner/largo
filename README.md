@@ -84,10 +84,6 @@ command if you like – for instance, for adding additional mount points.
 
   A few example projects and a template Dockerfile to use for your own projects.
 
-* README.md
-
-  This file.
-
 ## License
 
 Please see [LICENSE](/LICENSE) for licensing details.
