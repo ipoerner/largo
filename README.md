@@ -27,7 +27,7 @@ directory, or you can supersede it with something else.
 In any case, your current working directory must contain a Dockerfile that uses
 an existing Cargo base image as a base.
 
-    bin/cargo-deliver <project-name> [<args>]
+    bin/cargo-drop <project-name> [<args>]
 
 Spawns a temporary Docker container which will bring you to your custom build
 environment. This script must be invoked from within the projects source
@@ -65,7 +65,7 @@ command if you like – for instance, for adding additional mount points.
     To build a new Docker image for a given project. Invoke this from within
     your project path.
 
-  * cargo-deliver
+  * cargo-drop
 
     Spawns a new Docker container for a given project, mounts the project source
     tree to the your home directory within the Docker container and brings you
