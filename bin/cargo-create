@@ -16,11 +16,9 @@ case $# in
     ;;
 esac
 
-(cd ${SCRIPTPATH}/../base
-cp -f Dockerfile.${BASE} Dockerfile
+cp -f ${SCRIPTPATH}/../base/Dockerfile.${BASE} ${SCRIPTPATH}/../base/Dockerfile
 sudo docker build \
     --tag ${IMAGE_NAME} \
     --force-rm \
-    .
-rm Dockerfile
-)
+    ${SCRIPTPATH}/../base/
+rm ${SCRIPTPATH}/../base/Dockerfile
