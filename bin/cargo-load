@@ -10,11 +10,11 @@ SSH_DIR="${SCRIPTPATH}/../config/.ssh"
 case $# in
     0)
     PROJECT=${PWD##*/}
-    IMAGE_NAME="cargo/env-${PROJECT}"
+    IMAGE_NAME="cargo/${PROJECT}"
     ;;
     1)
     PROJECT=${1}
-    IMAGE_NAME="cargo/env-${PROJECT}"
+    IMAGE_NAME="cargo/${PROJECT}"
     ;;
     *)
     echo "Usage: cargo-load [<project-name>]"
