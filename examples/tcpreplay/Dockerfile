@@ -6,7 +6,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM cargo-base-trusty
+FROM cargo/base-trusty
 
 # File Author / Maintainer
 MAINTAINER Ingmar Poerner

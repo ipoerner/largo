@@ -15,8 +15,8 @@ case $# in
     ;;
     *)
     PROJECT=${1}
-    IMAGE_NAME="cargo-env-${PROJECT}"
-    CONTAINER_NAME="cargo-env-${PROJECT}"
+    IMAGE_NAME="cargo/env-${PROJECT}"
+    CONTAINER_NAME="cargo/env-${PROJECT}"
     REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
     shift
     ;;
