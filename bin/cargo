@@ -1,0 +1,27 @@
+usage() {
+    echo "Usage: cargo (create|drop|help|load)"
+}
+
+case $# in
+    0)
+    usage
+    exit 0
+    ;;
+    *)
+    COMMAND=${1}
+    case ${COMMAND} in
+        create|drop|load)
+        shift
+        ;;
+        help)
+        usage
+        exit 0
+        ;;
+        *)
+        usage
+        exit 1
+    esac
+    ;;
+esac
+
+cargo-${COMMAND} "$@"
