@@ -8,7 +8,7 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 ## <a name="usage"></a>Usage
 
-    bin/cargo-create <base-image>
+    cargo create <base-image>
 
 Creates a local Cargo base image to use as a base for your projects. These base
 images just add some custom features on top of existing public base images.
@@ -18,7 +18,7 @@ file extension identifies the base image name to use.
 
 Building a Cargo base image is the first step before doing anything else.
 
-    bin/cargo-load [<project-name>]
+    cargo load [<project-name>]
 
 Creates a local Cargo image that represents your custom build environment. The
 project name will be either derived automatically from your current working
@@ -27,7 +27,7 @@ directory, or you can supersede it with something else.
 In any case, your current working directory must contain a Dockerfile that uses
 an existing Cargo base image as a base.
 
-    bin/cargo-drop <project-name> [<args>]
+    cargo drop <project-name> [<args>]
 
 Spawns a temporary Docker container which will bring you to your custom build
 environment. This script must be invoked from within the projects source
@@ -54,7 +54,11 @@ command if you like – for instance, for adding additional mount points.
 
 * bin
 
-  Executables (also see [Usage](#usage)).
+  Executables (also see [Usage](#usage)) – add these to your `$PATH`.
+
+  * cargo
+
+    Main executable that wraps the commands described below.
 
   * cargo-create
 
