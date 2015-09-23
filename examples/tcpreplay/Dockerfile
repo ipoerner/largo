@@ -25,7 +25,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libtool
 
 # Copy user configs
-COPY config/* /home/cargo/
+COPY config /home/cargo/
 
 #RUN curl -SL http://www.monkey.org/~dugsong/fragroute/fragroute-1.2.tar.gz \
 #    | tar -xz -C /home/cargo
