@@ -42,7 +42,7 @@ esac
 
 if [ -n "${BASE}" ]; then
     cp -f ${SCRIPTPATH}/../base/Dockerfile.${BASE} ${SCRIPTPATH}/../base/Dockerfile
-    sudo docker build \
+    docker build \
         --tag ${IMAGE_NAME} \
         --force-rm \
         ${SCRIPTPATH}/../base/
@@ -58,7 +58,7 @@ else
         cp -f ${SSH_DIR}/$file config/.ssh/
     done
 
-    sudo docker build \
+    docker build \
         --tag ${IMAGE_NAME} \
         --force-rm \
         .
