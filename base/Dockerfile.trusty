@@ -34,6 +34,9 @@ COPY boot.sh /boot.sh
 RUN chmod 755 /boot.sh
 ENTRYPOINT /boot.sh
 
+# Set default root directory to homedir of 'largo' user
+ENV LARGO_ROOT /home/largo
+
 # Grab git completion script
 ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/largo/.git-completion.bash
 RUN echo ". ~/.git-completion.bash" >>/home/largo/.bashrc

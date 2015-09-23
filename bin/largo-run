@@ -3,7 +3,6 @@
 set -e
 
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
-REMOTE_HOME="/home/largo"
 PRIMARY_DNS="8.8.8.8" #`nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1`
 USER_ID=`id -u`
 GROUP_ID=`id -g`
@@ -21,7 +20,8 @@ case $# in
     PROJECT=${1}
     IMAGE_NAME="largo/${PROJECT}"
     CONTAINER_NAME="${PROJECT}"
-    REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
+    LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' ${IMAGE_NAME} | grep LARGO_ROOT | cut -f2 -d=)
+    REMOTE_WORKDIR="${LARGO_ROOT}/${PROJECT}"
     shift
     ;;
 esac
@@ -30,8 +30,8 @@ esac
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>
 docker run \
     --privileged \
-    -e DEV_UID=${USER_ID} \
-    -e DEV_GID=${GROUP_ID} \
+    --env DEV_UID=${USER_ID} \
+    --env DEV_GID=${GROUP_ID} \
     --interactive \
     --tty \
     --dns ${PRIMARY_DNS} \
