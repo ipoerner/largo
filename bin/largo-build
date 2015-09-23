@@ -7,13 +7,18 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 CONFIG_DIR="${SCRIPTPATH}/../config"
 SSH_DIR="${SCRIPTPATH}/../config/.ssh"
 
+usage() {
+    echo "Usage: largo-build --base <base-image>"
+    echo "       largo-build [<project-name>]"
+}
+
 case $# in
     0)
     PROJECT=${PWD##*/}
     IMAGE_NAME="largo/${PROJECT}"
     ;;
     1)
-    if [ ${1} -eq '--base' ]; then
+    if [ "${1}" = "--base" ]; then
         echo "Usage: largo-build --base <base-image>"
         exit 1
     fi
@@ -21,22 +26,21 @@ case $# in
     IMAGE_NAME="largo/${PROJECT}"
     ;;
     2)
-    if [ ${1} -eq '--base' ]; then
-        BASE=${1}
+    if [ "${1}" = "--base" ]; then
+        BASE=${2}
         IMAGE_NAME="largo/base-${BASE}"
     else
-        PROJECT=${1}
-        IMAGE_NAME="largo/${PROJECT}"
+        usage
+        exit 1
     fi
     ;;
     *)
-    echo "Usage: largo-build --base <base-image>"
-    echo "       largo-build [<project-name>]"
+    usage
     exit 1
     ;;
 esac
 
-if [ -n ${BASE} ]; then
+if [ -n "${BASE}" ]; then
     cp -f ${SCRIPTPATH}/../base/Dockerfile.${BASE} ${SCRIPTPATH}/../base/Dockerfile
     sudo docker build \
         --tag ${IMAGE_NAME} \
