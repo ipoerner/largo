@@ -6,7 +6,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM cargo/base-trusty
+FROM largo/base-trusty
 
 # File Author / Maintainer
 MAINTAINER Ingmar Poerner
@@ -25,11 +25,11 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libtool
 
 # Copy user configs
-COPY config /home/cargo/
+COPY config /home/largo/
 
 #RUN curl -SL http://www.monkey.org/~dugsong/fragroute/fragroute-1.2.tar.gz \
-#    | tar -xz -C /home/cargo
-#RUN cd /home/cargo/fragroute-1.2 && \
+#    | tar -xz -C /home/largo
+#RUN cd /home/largo/fragroute-1.2 && \
 #    ./configure --prefix=/usr && \
 #    sed -i 's/dnet.h/dumbnet.h/g' *.c *.h && \
 #    make install

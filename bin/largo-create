@@ -8,10 +8,10 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 case $# in
     1)
     BASE=${1}
-    IMAGE_NAME="cargo/base-${BASE}"
+    IMAGE_NAME="largo/base-${BASE}"
     ;;
     *)
-    echo "Usage: cargo-create <base-image>"
+    echo "Usage: largo-create <base-image>"
     exit 1
     ;;
 esac

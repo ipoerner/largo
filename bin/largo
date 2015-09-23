@@ -1,5 +1,5 @@
 usage() {
-    echo "Usage: cargo (create|drop|help|load)"
+    echo "Usage: largo (create|drop|help|load)"
 }
 
 case $# in
@@ -24,4 +24,4 @@ case $# in
     ;;
 esac
 
-cargo-${COMMAND} "$@"
+largo-${COMMAND} "$@"

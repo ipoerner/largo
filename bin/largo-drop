@@ -3,19 +3,19 @@
 set -e
 
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
-REMOTE_HOME="/home/cargo"
+REMOTE_HOME="/home/largo"
 PRIMARY_DNS="8.8.8.8" #`nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1`
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 
 case $# in
     0)
-    echo "Usage: cargo-drop <project-name> [<args>]"
+    echo "Usage: largo-drop <project-name> [<args>]"
     exit 1
     ;;
     *)
     PROJECT=${1}
-    IMAGE_NAME="cargo/${PROJECT}"
+    IMAGE_NAME="largo/${PROJECT}"
     CONTAINER_NAME="${PROJECT}"
     REMOTE_WORKDIR="${REMOTE_HOME}/${PROJECT}"
     shift

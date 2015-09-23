@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM cargo/base-trusty
+FROM largo/base-trusty
 
 # File Author / Maintainer
 MAINTAINER Ingmar Poerner
@@ -14,9 +14,9 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     build-essential
 
 # Copy user configs
-COPY config/* /home/cargo/
+COPY config/* /home/largo/
 # Copy additional SSH keys
-COPY config/.ssh/* /home/cargo/.ssh/
+COPY config/.ssh/* /home/largo/.ssh/
 # Optionally adds one or more known hosts
 RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan my-known-host >> /root/.ssh/known_hosts

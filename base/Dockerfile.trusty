@@ -1,5 +1,5 @@
 ############################################################
-# Dockerfile template for a Cargo base image
+# Dockerfile template for a Largo base image
 # Based upon Ubuntu 14.04 (Trusty Tahr)
 ############################################################
 
@@ -29,14 +29,14 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 # Work-around for missing user mapping
 # see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
 RUN apt-get install -y --no-install-recommends whois
-RUN useradd -m -s /bin/bash -p $(mkpasswd cargo) -G sudo cargo
+RUN useradd -m -s /bin/bash -p $(mkpasswd largo) -G sudo largo
 COPY boot.sh /boot.sh
 RUN chmod 755 /boot.sh
 ENTRYPOINT /boot.sh
 
 # Grab git completion script
-ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/cargo/.git-completion.bash
-RUN echo ". ~/.git-completion.bash" >>/home/cargo/.bashrc
+ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/largo/.git-completion.bash
+RUN echo ". ~/.git-completion.bash" >>/home/largo/.bashrc
 
 # SSH agent forwarding
-RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/cargo/.bashrc
+RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/largo/.bashrc
