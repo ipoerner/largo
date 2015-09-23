@@ -1,0 +1,63 @@
+############################################################
+# Dockerfile template for a Largo base image
+# Based upon Ubuntu 14.04 (Trusty Tahr)
+############################################################
+
+# Set the base image to Ubuntu
+FROM golang:1.4
+
+# File Author / Maintainer
+MAINTAINER Ingmar Poerner
+
+# Get noninteractive frontend for Debian to avoid some problems:
+#    debconf: unable to initialize frontend: Dialog
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    apt-utils
+
+# Update the repository sources list
+RUN apt-get update -y && apt-get upgrade -y
+
+# Install program to configure locales
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    locales
+RUN dpkg-reconfigure locales && \
+    locale-gen C.UTF-8 && \
+    /usr/sbin/update-locale LANG=C.UTF-8
+# Install default locale
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
+    locale-gen
+# Set default locale for the environment
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
+# Install most common dev tools
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    git \
+    git-email \
+    man \
+    screen \
+    ssh
+
+# Work-around for missing user mapping
+# see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
+RUN apt-get install -y --no-install-recommends whois
+RUN useradd -m -s /bin/bash -p $(mkpasswd largo) -G sudo largo
+COPY boot.sh /boot.sh
+RUN chmod 755 /boot.sh
+ENTRYPOINT /boot.sh
+
+# Exports path to Go binaries (/go/bin:/usr/src/go/bin)
+RUN echo "export PATH=$PATH" >> /home/largo/.bashrc
+
+# Set default root directory to homedir of 'largo' user
+ENV LARGO_ROOT /home/largo
+
+# Grab git completion script
+ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/largo/.git-completion.bash
+RUN echo ". ~/.git-completion.bash" >>/home/largo/.bashrc
+
+# SSH agent forwarding
+RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/largo/.bashrc
