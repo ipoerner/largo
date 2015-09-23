@@ -22,9 +22,13 @@ case $# in
     CONTAINER_NAME="${PROJECT}"
     LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' ${IMAGE_NAME} | grep LARGO_ROOT | cut -f2 -d=)
     REMOTE_WORKDIR="${LARGO_ROOT}/${PROJECT}"
+    BASH_HISTORY="/tmp/largo/${PROJECT}/.bash_history"
     shift
     ;;
 esac
+
+mkdir -p $(dirname "${BASH_HISTORY}")
+touch ${BASH_HISTORY}
 
 # the trick of forwarding the SSH agent into the Docker container comes from Docker issue #6396 on GitHub
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>
@@ -38,6 +42,7 @@ docker run \
     --name ${CONTAINER_NAME} \
     --volume ${REPOSITORY_PATH}:${REMOTE_WORKDIR} \
     --volume "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock" \
+    --volume "${BASH_HISTORY}:/home/largo/.bash_history" \
     --rm \
     "$@" \
     ${IMAGE_NAME}
