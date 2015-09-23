@@ -4,7 +4,7 @@ set -e
 
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
 REMOTE_HOME="/home/cargo"
-PRIMARY_DNS=`nm-tool | awk '/DNS:/ { print $2 }' | head -n 1`
+PRIMARY_DNS="8.8.8.8" #`nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1`
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 
