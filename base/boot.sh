@@ -28,9 +28,4 @@ create_user_largo() {
 
 getent passwd largo > /dev/null || create_user_largo
 
-if [ -z "$1" ] ; then
-	exec /bin/su largo -l
-else
-	cmd="$@"
-	exec /bin/su largo -lc "$cmd"
-fi
+exec login -f largo
