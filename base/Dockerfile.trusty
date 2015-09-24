@@ -26,20 +26,18 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     screen \
     ssh
 
-# Work-around for missing user mapping
-# see <https://github.com/willb/dockerfiles/tree/master/java-dev/centos7-spark-uid>
-RUN apt-get install -y --no-install-recommends whois
-RUN useradd -m -s /bin/bash -p $(mkpasswd largo) -G sudo largo
+# Push entrypoint script
 COPY boot.sh /boot.sh
 RUN chmod 755 /boot.sh
 ENTRYPOINT /boot.sh
 
-# Set default root directory to homedir of 'largo' user
+# Create root directory (homedir of the 'largo' user)
 ENV LARGO_ROOT /home/largo
+VOLUME /home/largo
 
 # Grab git completion script
-ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /home/largo/.git-completion.bash
-RUN echo ". ~/.git-completion.bash" >>/home/largo/.bashrc
+ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash /etc/profile.d/git-completion.sh
+RUN chmod 644 /etc/profile.d/git-completion.sh
 
 # SSH agent forwarding
-RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >>/home/largo/.bashrc
+RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >> /etc/profile.d/largo.sh

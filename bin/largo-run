@@ -4,8 +4,6 @@ set -e
 
 REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
 PRIMARY_DNS="8.8.8.8" #`nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1`
-USER_ID=`id -u`
-GROUP_ID=`id -g`
 
 usage() {
     echo "Usage: largo-run <project-name> [<args>]"
@@ -21,28 +19,22 @@ case $# in
     IMAGE_NAME="largo/${PROJECT}"
     CONTAINER_NAME="${PROJECT}"
     LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' ${IMAGE_NAME} | grep LARGO_ROOT | cut -f2 -d=)
-    REMOTE_WORKDIR="${LARGO_ROOT}/${PROJECT}"
-    BASH_HISTORY="/tmp/largo/${PROJECT}/.bash_history"
+    LARGO_WORKDIR="${LARGO_ROOT}/${PROJECT}"
     shift
     ;;
 esac
-
-mkdir -p $(dirname "${BASH_HISTORY}")
-touch ${BASH_HISTORY}
 
 # the trick of forwarding the SSH agent into the Docker container comes from Docker issue #6396 on GitHub
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>
 docker run \
     --privileged \
-    --env DEV_UID=${USER_ID} \
-    --env DEV_GID=${GROUP_ID} \
+    --env LARGO_WORKDIR=${LARGO_WORKDIR} \
     --interactive \
     --tty \
     --dns ${PRIMARY_DNS} \
     --name ${CONTAINER_NAME} \
-    --volume ${REPOSITORY_PATH}:${REMOTE_WORKDIR} \
+    --volume ${REPOSITORY_PATH}:${LARGO_WORKDIR} \
     --volume "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock" \
-    --volume "${BASH_HISTORY}:/home/largo/.bash_history" \
     --rm \
     "$@" \
     ${IMAGE_NAME}

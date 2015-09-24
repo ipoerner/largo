@@ -17,6 +17,6 @@ RUN cd ${GOPATH} && \
 # project into $GOPATH/src/github.com/mitchellh/packer by defining a custom
 # $LARGO_ROOT environment varible.
 VOLUME /home/largo/go
-RUN echo "export GOPATH=/home/largo/go" >> /home/largo/.bashrc
-RUN echo "export PATH=$PATH:/home/largo/go/bin" >> /home/largo/.bashrc
+RUN echo "export GOPATH=/home/largo/go" >> /etc/profile.d/largo.sh
+RUN echo "export PATH=$PATH:/home/largo/go/bin" >> /etc/profile.d/largo.sh
 ENV LARGO_ROOT /home/largo/go/src/github.com/mitchellh

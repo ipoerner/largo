@@ -1,19 +1,36 @@
 #!/bin/sh
 
-# manual user mapping, inspired by <http://chapeau.freevariable.com/2014/08/docker-uid.html>
+set -e
 
-ORIGPASSWD=$(cat /etc/passwd | grep largo)
-ORIG_UID=$(echo $ORIGPASSWD | cut -f3 -d:)
-ORIG_GID=$(echo $ORIGPASSWD | cut -f4 -d:)
+create_user_largo() {
+    TARGET_UID=$(stat -c%u ${LARGO_WORKDIR})
+    TARGET_GID=$(stat -c%g ${LARGO_WORKDIR})
 
-DEV_UID=${DEV_UID:=$ORIG_UID}
-DEV_GID=${DEV_GID:=$ORIG_GID}
+    groupadd \
+        --gid ${TARGET_GID} \
+        largo
 
-ORIG_HOME=$(echo $ORIGPASSWD | cut -f6 -d:)
+    useradd \
+        --system \
+        --shell /bin/bash \
+        --home /home/largo \
+        --gid largo \
+        --groups staff,sudo \
+        --uid $TARGET_UID \
+        --password $(mkpasswd largo) \
+        largo \
+        2> /dev/null--
 
-sed -i -e "s/:$ORIG_UID:$ORIG_GID:/:$DEV_UID:$DEV_GID:/" /etc/passwd
-sed -i -e "s/largo:x:$ORIG_GID:/largo:x:$DEV_GID:/" /etc/group
+    chown --recursive ${TARGET_UID}:${TARGET_GID} /home/largo
 
-chown -R ${DEV_UID}:${DEV_GID} ${ORIG_HOME}
+    echo "cd ${LARGO_WORKDIR}" >> /home/largo/.profile
+}
 
-exec login -f largo
+getent passwd largo > /dev/null || create_user_largo
+
+if [ -z "$1" ] ; then
+	exec /bin/su largo -l
+else
+	cmd="$@"
+	exec /bin/su largo -lc "$cmd"
+fi
