@@ -1,3 +1,8 @@
+############################################################
+# Dockerfile template for Packer 0.8.7
+# <https://github.com/mitchellh/packer>
+# note: 'git status' must be called initially before 'make'
+############################################################
 FROM largo/base-golang
 
 MAINTAINER Ingmar Poerner <ingmar.poerner@rhebo.com>
