@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+    echo "Usage: largo-attach <project-name>"
+}
+
+case $# in
+    1)
+    PROJECT=${1}
+    CONTAINER_NAME="${PROJECT}"
+    ;;
+    *)
+    usage
+    exit 1
+    ;;
+esac
+
+docker start ${CONTAINER_NAME} > /dev/null
+docker attach ${CONTAINER_NAME}

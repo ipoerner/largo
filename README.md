@@ -29,10 +29,10 @@ an existing Largo base image as a base.
 
     largo run <project-name> [<args>]
 
-Spawns a temporary Docker container which will bring you to your custom build
-environment. This script must be invoked from within the projects source
-repository, as it will use Git to determine the project root and mount this to
-your home directory within the Docker container.
+Spawns a Docker container and brings you to your custom build environment. This
+script must be invoked from within the projects source repository, as it will
+use Git to determine the project root and mount this to your home directory
+within the Docker container.
 
 If your project is not a Git repository, it will use `pwd` to determine the
 current path. Thus, you'll first need to explicitly change to the exact
@@ -44,7 +44,20 @@ who has sudo rights and uses the password 'largo'. All files created locally by
 the `largo` user will be owned by your original user on the host system.
 
 You can also append a list of additional arguments to pass to the `docker run`
-command if you like – for instance, for adding additional mount points.
+command if you like – for instance, for removing the container immediately
+after logout with `--rm`.
+
+    largo attach <project-name>
+
+Use this command to reconnect to a container that you previously logged out
+from. Containers normally persist after logging out in order to keep the home
+directory of the 'largo' user intact.
+
+    largo destroy <project-name>
+
+Destroy the container associated with your project. This will not affect your
+project directory, but it will purge the home directory of the 'largo' user
+along with it.
 
 ## <a name="dirstruct"></a>Directory Structure
 
@@ -60,11 +73,21 @@ command if you like – for instance, for adding additional mount points.
 
     Main executable that wraps the commands described below.
 
+  * largo-attach
+
+    Restarts the Docker container for an existing project and attaches to it.
+    Invoke this script from somewhere within your projects source repository.
+
   * largo-build
 
     Creates the Largo base images to use as a base for your project images, or
     builds the project images. In the latter case, the command must be invoked
     from within your project path.
+
+  * largo-destroy
+
+    Removes the Docker container for an existing project along with all volumes.
+    Invoke this script from somewhere within your projects source repository.
 
   * largo-run
 

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+usage() {
+    echo "Usage: largo-destroy <project-name>"
+}
+
+case $# in
+    1)
+    PROJECT=${1}
+    CONTAINER_NAME="${PROJECT}"
+    ;;
+    *)
+    usage
+    exit 1
+    ;;
+esac
+
+docker ps --all --quiet --filter "name=${CONTAINER_NAME}" | xargs docker rm --force --volumes

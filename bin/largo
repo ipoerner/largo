@@ -1,5 +1,5 @@
 usage() {
-    echo "Usage: largo (build|help|run)"
+    echo "Usage: largo (attach|build|destroy|help|run)"
 }
 
 case $# in
@@ -10,7 +10,7 @@ case $# in
     *)
     COMMAND=${1}
     case ${COMMAND} in
-        build|run)
+        attach|build|destroy|run)
         shift
         ;;
         help)

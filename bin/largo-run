@@ -35,6 +35,5 @@ docker run \
     --name ${CONTAINER_NAME} \
     --volume ${REPOSITORY_PATH}:${LARGO_WORKDIR} \
     --volume "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock" \
-    --rm \
     "$@" \
     ${IMAGE_NAME}
