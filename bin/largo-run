@@ -18,11 +18,26 @@ case $# in
     PROJECT=${1}
     IMAGE_NAME="largo/${PROJECT}"
     CONTAINER_NAME="${PROJECT}"
+    LARGO_HOME="${HOME}/.largo/${PROJECT}"
     LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' ${IMAGE_NAME} | grep LARGO_ROOT | cut -f2 -d=)
     LARGO_WORKDIR="${LARGO_ROOT}/${PROJECT}"
     shift
     ;;
 esac
+
+CONTAINER_ID=$(docker ps --all --quiet --filter "name=${CONTAINER_NAME}")
+
+if [ -n "${CONTAINER_ID}" ]; then
+    echo "Project ${PROJECT} is still open. Reconnecting..."
+    docker start ${CONTAINER_NAME} > /dev/null
+    docker attach ${CONTAINER_NAME}
+    exit 0
+fi
+
+if [ -d "${LARGO_HOME}" ]; then
+    rm -rf ${LARGO_HOME}
+fi
+mkdir -p ${LARGO_HOME}
 
 # the trick of forwarding the SSH agent into the Docker container comes from Docker issue #6396 on GitHub
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>
@@ -33,6 +48,7 @@ docker run \
     --tty \
     --dns ${PRIMARY_DNS} \
     --name ${CONTAINER_NAME} \
+    --volume ${LARGO_HOME}:/home/largo \
     --volume ${REPOSITORY_PATH}:${LARGO_WORKDIR} \
     --volume "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock" \
     "$@" \

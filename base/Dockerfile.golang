@@ -49,9 +49,8 @@ COPY boot.sh /boot.sh
 RUN chmod 755 /boot.sh
 ENTRYPOINT /boot.sh
 
-# Create root directory (homedir of the 'largo' user)
+# Set default root dir
 ENV LARGO_ROOT /home/largo
-VOLUME /home/largo
 
 # Exports path to Go binaries (/go/bin:/usr/src/go/bin)
 RUN echo "export PATH=$PATH" > /etc/profile.d/largo.sh

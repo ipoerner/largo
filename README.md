@@ -45,19 +45,16 @@ the `largo` user will be owned by your original user on the host system.
 
 You can also append a list of additional arguments to pass to the `docker run`
 command if you like – for instance, for removing the container immediately
-after logout with `--rm`.
+after logging out.
 
-    largo attach <project-name>
-
-Use this command to reconnect to a container that you previously logged out
-from. Containers normally persist after logging out in order to keep the home
-directory of the 'largo' user intact.
+Invoke twice to reconnect to a container that was run earlier.
 
     largo destroy <project-name>
 
-Destroy the container associated with your project. This will not affect your
-project directory, but it will purge the home directory of the 'largo' user
-along with it.
+Destroy the container associated with your project. Containers normally persist
+after logging out in order to keep the home directory of the 'largo' user
+intact. Destroying a project's container will purge the home directory of the
+'largo' user, but it will not affect your project repository.
 
 ## <a name="dirstruct"></a>Directory Structure
 
@@ -72,11 +69,6 @@ along with it.
   * largo
 
     Main executable that wraps the commands described below.
-
-  * largo-attach
-
-    Restarts the Docker container for an existing project and attaches to it.
-    Invoke this script from somewhere within your projects source repository.
 
   * largo-build
 
@@ -93,8 +85,12 @@ along with it.
 
     Spawns a new Docker container for a given project, mounts the project source
     tree to the your home directory within the Docker container and brings you
-    to a login shell. Invoke this script from somewhere within your projects
-    source repository.
+    to a login shell.
+
+    If the container is still present from previous runs, restarts the container
+    and attaches to it.
+
+    Invoke this script from somewhere within your projects source repository.
 
 * examples
 
