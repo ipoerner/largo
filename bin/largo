@@ -8,8 +8,8 @@ case $# in
     exit 0
     ;;
     *)
-    COMMAND=${1}
-    case ${COMMAND} in
+    COMMAND="${1}"
+    case "${COMMAND}" in
         build|destroy|run)
         shift
         ;;
@@ -24,4 +24,4 @@ case $# in
     ;;
 esac
 
-largo-${COMMAND} "$@"
+largo-"${COMMAND}" "$@"

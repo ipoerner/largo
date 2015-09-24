@@ -3,9 +3,7 @@
 set -e
 
 SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
-CONFIG_DIR="${SCRIPTPATH}/../config"
-SSH_DIR="${SCRIPTPATH}/../config/.ssh"
+SCRIPTPATH=$(dirname "${SCRIPT}")
 
 usage() {
     echo "Usage: largo-build --base <base-image>"
@@ -14,7 +12,7 @@ usage() {
 
 case $# in
     0)
-    PROJECT=${PWD##*/}
+    PROJECT="${PWD##*/}"
     IMAGE_NAME="largo/${PROJECT}"
     ;;
     1)
@@ -22,12 +20,12 @@ case $# in
         echo "Usage: largo-build --base <base-image>"
         exit 1
     fi
-    PROJECT=${1}
+    PROJECT="${1}"
     IMAGE_NAME="largo/${PROJECT}"
     ;;
     2)
     if [ "${1}" = "--base" ]; then
-        BASE=${2}
+        BASE="${2}"
         IMAGE_NAME="largo/base-${BASE}"
     else
         usage
@@ -41,15 +39,15 @@ case $# in
 esac
 
 if [ -n "${BASE}" ]; then
-    cp -f ${SCRIPTPATH}/../base/Dockerfile.${BASE} ${SCRIPTPATH}/../base/Dockerfile
+    cp -f "${SCRIPTPATH}/../base/Dockerfile.${BASE}" "${SCRIPTPATH}/../base/Dockerfile"
     docker build \
-        --tag ${IMAGE_NAME} \
+        --tag "${IMAGE_NAME}" \
         --force-rm \
-        ${SCRIPTPATH}/../base/
-    rm ${SCRIPTPATH}/../base/Dockerfile
+        "${SCRIPTPATH}/../base/"
+    rm "${SCRIPTPATH}/../base/Dockerfile"
 else
     docker build \
-        --tag ${IMAGE_NAME} \
+        --tag "${IMAGE_NAME}" \
         --force-rm \
         .
 fi

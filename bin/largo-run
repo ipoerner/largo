@@ -2,8 +2,8 @@
 
 set -e
 
-REPOSITORY_PATH=`git rev-parse --show-toplevel 2> /dev/null || pwd`
-PRIMARY_DNS="8.8.8.8" #`nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1`
+REPOSITORY_PATH=$(git rev-parse --show-toplevel 2> /dev/null || pwd)
+PRIMARY_DNS="8.8.8.8" #$(nmcli device show | awk '/\.DNS\[/ { print $2 }' | head -n 1)
 
 usage() {
     echo "Usage: largo-run <project-name> [<args>]"
@@ -15,11 +15,11 @@ case $# in
     exit 1
     ;;
     *)
-    PROJECT=${1}
+    PROJECT="${1}"
     IMAGE_NAME="largo/${PROJECT}"
     CONTAINER_NAME="${PROJECT}"
     LARGO_HOME="${HOME}/.largo/${PROJECT}"
-    LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' ${IMAGE_NAME} | grep LARGO_ROOT | cut -f2 -d=)
+    LARGO_ROOT=$(docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' "${IMAGE_NAME}" | grep LARGO_ROOT | cut -f2 -d=)
     LARGO_WORKDIR="${LARGO_ROOT}/${PROJECT}"
     shift
     ;;
@@ -29,27 +29,27 @@ CONTAINER_ID=$(docker ps --all --quiet --filter "name=${CONTAINER_NAME}")
 
 if [ -n "${CONTAINER_ID}" ]; then
     echo "Project ${PROJECT} is still open. Reconnecting..."
-    docker start ${CONTAINER_NAME} > /dev/null
-    docker attach ${CONTAINER_NAME}
+    docker start "${CONTAINER_NAME}" > /dev/null
+    docker attach "${CONTAINER_NAME}"
     exit 0
 fi
 
 if [ -d "${LARGO_HOME}" ]; then
-    rm -rf ${LARGO_HOME}
+    rm -rf "${LARGO_HOME}"
 fi
-mkdir -p ${LARGO_HOME}
+mkdir -p "${LARGO_HOME}"
 
 # the trick of forwarding the SSH agent into the Docker container comes from Docker issue #6396 on GitHub
 # however, it was most probably first introduced by Chris Corbyn <https://gist.github.com/d11wtq/8699521>
 docker run \
     --privileged \
-    --env LARGO_WORKDIR=${LARGO_WORKDIR} \
+    --env "LARGO_WORKDIR=${LARGO_WORKDIR}" \
     --interactive \
     --tty \
-    --dns ${PRIMARY_DNS} \
-    --name ${CONTAINER_NAME} \
-    --volume ${LARGO_HOME}:/home/largo \
-    --volume ${REPOSITORY_PATH}:${LARGO_WORKDIR} \
+    --dns "${PRIMARY_DNS}" \
+    --name "${CONTAINER_NAME}" \
+    --volume "${LARGO_HOME}:/home/largo" \
+    --volume "${REPOSITORY_PATH}:${LARGO_WORKDIR}" \
     --volume "${SSH_AUTH_SOCK}:/home/largo/ssh_auth_sock" \
     "$@" \
-    ${IMAGE_NAME}
+    "${IMAGE_NAME}"

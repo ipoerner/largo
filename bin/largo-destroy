@@ -8,7 +8,7 @@ usage() {
 
 case $# in
     1)
-    PROJECT=${1}
+    PROJECT="${1}"
     CONTAINER_NAME="${PROJECT}"
     LARGO_HOME="${HOME}/.largo/${PROJECT}"
     ;;
@@ -19,4 +19,4 @@ case $# in
 esac
 
 docker ps --all --quiet --filter "name=${CONTAINER_NAME}" | xargs docker rm --force --volumes
-rm -rf ${LARGO_HOME}
+rm -rf "${LARGO_HOME}"
