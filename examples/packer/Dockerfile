@@ -1,7 +1,9 @@
 ############################################################
 # Dockerfile template for Packer 0.8.7
 # <https://github.com/mitchellh/packer>
-# note: 'git status' must be called initially before 'make'
+# note: due to some internal issues with the Makefile,
+#       'git update-index --refresh' must be called
+#       initially before invoking 'make updatedeps'
 ############################################################
 FROM largo/base-golang
 
