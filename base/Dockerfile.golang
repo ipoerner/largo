@@ -60,4 +60,4 @@ ADD https://raw.githubusercontent.com/git/git/master/contrib/completion/git-comp
 RUN chmod 644 /etc/profile.d/git-completion.sh
 
 # SSH agent forwarding
-RUN echo "export SSH_AUTH_SOCK=/tmp/ssh_auth_sock" >> /etc/profile.d/largo.sh
+RUN echo "export SSH_AUTH_SOCK=/home/largo/ssh_auth_sock" >> /etc/profile.d/largo.sh

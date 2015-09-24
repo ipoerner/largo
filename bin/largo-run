@@ -50,6 +50,6 @@ docker run \
     --name ${CONTAINER_NAME} \
     --volume ${LARGO_HOME}:/home/largo \
     --volume ${REPOSITORY_PATH}:${LARGO_WORKDIR} \
-    --volume "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock" \
+    --volume "${SSH_AUTH_SOCK}:/home/largo/ssh_auth_sock" \
     "$@" \
     ${IMAGE_NAME}
