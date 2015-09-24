@@ -96,14 +96,6 @@ along with it.
     to a login shell. Invoke this script from somewhere within your projects
     source repository.
 
-* config
-
-  Put links to your configuration files here (i.e. `~/.gitconfig`). These will
-  be mirrored on your Docker containers home directory.
-
-  You can also provide additional SSH keys which are not installed on your host
-  system by putting them into `config/.ssh`.
-
 * examples
 
   A few example projects and a template Dockerfile to use for your own projects.

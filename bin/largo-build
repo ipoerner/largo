@@ -48,16 +48,6 @@ if [ -n "${BASE}" ]; then
         ${SCRIPTPATH}/../base/
     rm ${SCRIPTPATH}/../base/Dockerfile
 else
-    for file in `find ${CONFIG_DIR} -maxdepth 1 -not -type d | grep -v .gitignore`; do
-        mkdir -p config
-        cp -f $file config/
-    done
-
-    for file in `ls -AL -I .gitignore ${SSH_DIR}`; do
-        mkdir -p config/.ssh
-        cp -f ${SSH_DIR}/$file config/.ssh/
-    done
-
     docker build \
         --tag ${IMAGE_NAME} \
         --force-rm \

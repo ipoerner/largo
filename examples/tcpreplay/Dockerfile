@@ -24,9 +24,6 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 #   libpopt-dev \
     libtool
 
-# Copy user configs
-COPY config /home/largo/
-
 #RUN curl -SL http://www.monkey.org/~dugsong/fragroute/fragroute-1.2.tar.gz \
 #    | tar -xz -C /home/largo
 #RUN cd /home/largo/fragroute-1.2 && \
