@@ -18,5 +18,10 @@ case $# in
     ;;
 esac
 
-docker ps --all --quiet --filter "name=${CONTAINER_NAME}" | xargs docker rm --force --volumes
+docker ps \
+    --all \
+    --quiet \
+    --filter "name=${CONTAINER_NAME}" \
+    | xargs docker rm --force --volumes
+
 rm -rf "${LARGO_HOME}"
