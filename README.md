@@ -8,7 +8,7 @@ as well as SSH agent forwarding for simplified SSH key management.
 
 ## <a name="usage"></a>Usage
 
-    largo build --base <base-image>
+    $ largo build --base <base-image>
 
 Creates a local Largo base image to use as a base for your projects. These base
 images just add some custom features on top of existing public base images.
@@ -18,7 +18,7 @@ file extension identifies the base image name to use.
 
 Building a Largo base image is the first step before doing anything else.
 
-    largo build [<project-name>]
+    $ largo build [<project-name>]
 
 Creates a local Largo image that represents your custom build environment. The
 project name will be either derived automatically from your current working
@@ -27,7 +27,7 @@ directory, or you can supersede it with something else.
 In any case, your current working directory must contain a Dockerfile that uses
 an existing Largo base image as a base.
 
-    largo run <project-name> [<args>]
+    $ largo run <project-name> [<args>]
 
 Spawns a Docker container and brings you to your custom build environment. This
 script must be invoked from within the projects source repository, as it will
@@ -49,7 +49,7 @@ after logging out.
 
 Invoke twice to reconnect to a container that was run earlier.
 
-    largo destroy <project-name>
+    $ largo destroy <project-name>
 
 Destroy the container associated with your project. Containers normally persist
 after logging out in order to keep the home directory of the 'largo' user
