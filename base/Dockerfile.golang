@@ -1,10 +1,10 @@
 ############################################################
 # Dockerfile template for a Largo base image
-# Based upon Ubuntu 14.04 (Trusty Tahr)
+# Based upon Debian 8 (Jessie)
 ############################################################
 
-# Set the base image to Ubuntu
-FROM golang:1.4
+# Set the base image to Debian w/ golang 1.5 support
+FROM golang:1.5
 
 # File Author / Maintainer
 MAINTAINER Ingmar Poerner
