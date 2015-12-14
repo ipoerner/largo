@@ -43,6 +43,7 @@ if [ -n "${BASE}" ]; then
     docker build \
         --tag "${IMAGE_NAME}" \
         --force-rm \
+        --pull \
         "${SCRIPTPATH}/../base/"
     rm "${SCRIPTPATH}/../base/Dockerfile"
 else
